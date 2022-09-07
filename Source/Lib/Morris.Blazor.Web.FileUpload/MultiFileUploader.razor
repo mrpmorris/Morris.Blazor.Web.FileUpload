@@ -1,0 +1,9 @@
+﻿<InputFile OnChange=@AddFiles multiple/>
+
+<ul>
+@foreach(IBrowserFile file in BrowserFiles)
+{
+    <li>@file.Name</li>
+}
+</ul>
+

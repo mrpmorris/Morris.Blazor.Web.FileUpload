@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32802.462
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Morris.Blazor.Web.FileUpload.Server", "Morris.Blazor.Web.FileUpload\Server\Morris.Blazor.Web.FileUpload.Server.csproj", "{7AEFDF2C-34BA-497D-9560-161FB0AC16AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Morris.Blazor.Web.FileUpload.Client", "Morris.Blazor.Web.FileUpload\Client\Morris.Blazor.Web.FileUpload.Client.csproj", "{44EF6C50-2C4C-46BE-8BB4-ABD27CD24902}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Morris.Blazor.Web.FileUpload.Shared", "Morris.Blazor.Web.FileUpload\Shared\Morris.Blazor.Web.FileUpload.Shared.csproj", "{91CBEA94-8FAA-4778-A520-1351647AF51A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Morris.Blazor.Web.FileUpload", "..\Lib\Morris.Blazor.Web.FileUpload\Morris.Blazor.Web.FileUpload.csproj", "{FE0AABAA-F412-4F38-9AF0-461A333F418C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7AEFDF2C-34BA-497D-9560-161FB0AC16AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AEFDF2C-34BA-497D-9560-161FB0AC16AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AEFDF2C-34BA-497D-9560-161FB0AC16AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AEFDF2C-34BA-497D-9560-161FB0AC16AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44EF6C50-2C4C-46BE-8BB4-ABD27CD24902}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44EF6C50-2C4C-46BE-8BB4-ABD27CD24902}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44EF6C50-2C4C-46BE-8BB4-ABD27CD24902}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44EF6C50-2C4C-46BE-8BB4-ABD27CD24902}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91CBEA94-8FAA-4778-A520-1351647AF51A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91CBEA94-8FAA-4778-A520-1351647AF51A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91CBEA94-8FAA-4778-A520-1351647AF51A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91CBEA94-8FAA-4778-A520-1351647AF51A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE0AABAA-F412-4F38-9AF0-461A333F418C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE0AABAA-F412-4F38-9AF0-461A333F418C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE0AABAA-F412-4F38-9AF0-461A333F418C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE0AABAA-F412-4F38-9AF0-461A333F418C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2A36C89E-E5E6-4C7C-B928-B3350CCCC34F}
+	EndGlobalSection
+EndGlobal
