@@ -11,13 +11,15 @@ public class FormData : IAsyncDisposable
 {
     private readonly int FormDataId;
     private readonly IJSRuntime JSRuntime;
-    private readonly DotNetObjectReference<FormData> JSReference;
+    private readonly JSCallbacks Callbacks;
+    private readonly DotNetObjectReference<JSCallbacks> CallbacksJSReference;
 
     private FormData(IJSRuntime jSRuntime, int formDataId)
     {
-        JSReference = DotNetObjectReference.Create(this);
         JSRuntime = jSRuntime ?? throw new ArgumentNullException(nameof(jSRuntime));
         FormDataId = formDataId;
+        Callbacks = new JSCallbacks();
+        CallbacksJSReference = DotNetObjectReference.Create(Callbacks);
     }
 
     public static async ValueTask<FormData> CreateAsync(IJSRuntime jsRuntime)
@@ -39,11 +41,22 @@ public class FormData : IAsyncDisposable
 
     public async ValueTask PostAsync(string url)
     {
-        await JSRuntime.InvokeVoidAsync("Morris.Blazor.Web.MultiFileUploader.post", FormDataId, url);
+        await JSRuntime.InvokeVoidAsync("Morris.Blazor.Web.MultiFileUploader.post", FormDataId, url, CallbacksJSReference);
     }
 
     public async ValueTask DisposeAsync()
     {
+        CallbacksJSReference.Dispose();
         await JSRuntime.InvokeVoidAsync("Morris.Blazor.Web.MultiFileUploader.dispose", FormDataId);
+    }
+
+    private class JSCallbacks
+    {
+        [JSInvokable("OnProgress")]
+        public Task OnProgress(long uploaded, long fileSize)
+        {
+            Console.WriteLine($"Uploaded {uploaded} of {fileSize}");
+            return Task.CompletedTask;
+        }
     }
 }

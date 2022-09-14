@@ -21,11 +21,34 @@
             formData.append("file", file, file.name);
         },
 
-        post: function (formDataId, url) {
+        post: function (formDataId, url, callback) {
             const formData = this._formDataInstances[formDataId];
-            const request = new XMLHttpRequest();
-            request.open("POST", url);
-            request.send(formData);
+            return new Promise(function (resolve, reject) {
+
+                const request = new XMLHttpRequest();
+                request.open("POST", url);
+
+                request.addEventListener("error", function (e) {
+                    console.log('error', e);
+                    reject();
+                });
+
+                request.addEventListener("load", function (r) {
+                    console.log('success', r);
+                    resolve();
+                });
+
+                request.upload.addEventListener("progress", function (e) {
+                    console.log('progress');
+                    if (!e.lengthComputable) {
+                        return;
+                    }
+                    callback.invokeMethodAsync("OnProgress", e.loaded, e.total);
+                });
+
+
+                request.send(formData);
+            });
         },
 
         dispose: function (formDataId) {
