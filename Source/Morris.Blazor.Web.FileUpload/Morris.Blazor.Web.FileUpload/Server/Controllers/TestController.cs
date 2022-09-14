@@ -13,7 +13,7 @@ public class TestController : ControllerBase
         Console.WriteLine(Request.Form.Files.Count);
         foreach (IFormFile file in Request.Form.Files)
         {
-            Console.WriteLine($"{file.Name} {file.Length}");
+            Console.WriteLine($"{file.FileName} {file.Length}");
         }
         return Ok();
     }
