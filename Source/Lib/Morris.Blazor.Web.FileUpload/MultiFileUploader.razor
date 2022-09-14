@@ -1,9 +1,9 @@
 ﻿<InputFile OnChange=@AddFiles multiple/>
 
 <ul>
-@foreach(IBrowserFile file in BrowserFiles)
+@foreach(FileUploadInfo fileUploadInfo in FileUploadInfos)
 {
-    <li>@file.Name</li>
+    <li>@fileUploadInfo.BrowserFile.Name</li>
 }
 </ul>
 

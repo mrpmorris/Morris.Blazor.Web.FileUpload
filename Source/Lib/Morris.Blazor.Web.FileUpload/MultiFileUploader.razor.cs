@@ -4,11 +4,17 @@ namespace Morris.Blazor.Web.FileUpload;
 
 public partial class MultiFileUploader
 {
-    private readonly List<IBrowserFile> BrowserFiles = new();
+    private readonly List<FileUploadInfo> FileUploadInfos = new();
 
     private void AddFiles(InputFileChangeEventArgs e)
     {
-        foreach(IBrowserFile file in e.GetMultipleFiles(maximumFileCount: int.MaxValue))
-            BrowserFiles.Add(file);
+
+        IReadOnlyList<IBrowserFile> files = e.GetMultipleFiles(maximumFileCount: int.MaxValue);
+        for (int i = 0; i < files.Count; i++)
+        {
+            IBrowserFile browserFile = files[i];
+            var fileUploadInfo = new FileUploadInfo(HtmlInputId: "theInput", HtmlInputFileIndex: i, browserFile);
+            FileUploadInfos.Add(fileUploadInfo);
+        }
     }
 }
