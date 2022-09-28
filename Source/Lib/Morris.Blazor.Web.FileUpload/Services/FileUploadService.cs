@@ -2,5 +2,8 @@
 
 public interface IFileUploadService
 {
-    ValueTask UploadAsync(FileUploadInfo fileUploadInfo, Action? onProgress = null);
+    ValueTask UploadAsync(
+        FileUploadInfo fileUploadInfo,
+        Action? onProgress = null,
+        CancellationToken cancellationToken = default);
 }

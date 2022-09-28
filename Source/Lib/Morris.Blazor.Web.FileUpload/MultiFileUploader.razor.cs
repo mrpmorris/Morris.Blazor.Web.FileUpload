@@ -9,6 +9,7 @@ public partial class MultiFileUploader
     private readonly List<FileUploadInfo> FileUploadInfos = new();
     private readonly List<string> InputControlIds = new();
     private int NextInputId;
+    private CancellationTokenSource CancellationTokenSource = new();
 
     [Inject]
     private IFileUploadService FileUploadService { get; set; } = null!;
@@ -44,11 +45,32 @@ public partial class MultiFileUploader
         InputControlIds.Add($"InputFileId{NextInputId}");
     }
 
+    private void Cancel()
+    {
+        CancellationTokenSource.Cancel();
+    }
+
     private async Task UploadAsync()
     {
+        CancellationTokenSource = new();
         foreach (FileUploadInfo file in FileUploadInfos)
         {
-            await FileUploadService.UploadAsync(file, () => InvokeAsync(StateHasChanged));
+            if (file.Status != FileUploadStatus.Queued && file.Status != FileUploadStatus.Failed)
+                continue;
+
+            file.Status = FileUploadStatus.InProgress;
+            if (CancellationTokenSource.IsCancellationRequested)
+                file.Status = FileUploadStatus.Cancelled;
+            {
+                await FileUploadService.UploadAsync(
+                    file,
+                    () => InvokeAsync(StateHasChanged),
+                    CancellationTokenSource.Token);
+            }
+            if (CancellationTokenSource.IsCancellationRequested)
+                file.Status = FileUploadStatus.Cancelled;
+            else
+                file.Status = FileUploadStatus.Completed;
         }
     }
 }
