@@ -14,6 +14,8 @@ public class PretendFileUploadService : IFileUploadService
                 await Task.Delay(250);
                 fileUploadInfo.TotalBytesUploaded = fileUploadInfo.BrowserFile.Size * i / 10;
                 onProgress?.Invoke();
+                if (Random.Shared.Next(10) == 1)
+                    throw new FileUploadException("Brawkun", fileUploadInfo);
                 Console.WriteLine($"{fileUploadInfo.BrowserFile.Name} {fileUploadInfo.TotalBytesUploaded}");
             }
         }

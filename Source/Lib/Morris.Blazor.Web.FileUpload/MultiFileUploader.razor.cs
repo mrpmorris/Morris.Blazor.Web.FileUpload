@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Morris.Blazor.Web.FileUpload.Services;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Morris.Blazor.Web.FileUpload;
 
@@ -59,18 +60,25 @@ public partial class MultiFileUploader
                 continue;
 
             file.Status = FileUploadStatus.InProgress;
-            if (CancellationTokenSource.IsCancellationRequested)
-                file.Status = FileUploadStatus.Cancelled;
+            try
             {
-                await FileUploadService.UploadAsync(
-                    file,
-                    () => InvokeAsync(StateHasChanged),
-                    CancellationTokenSource.Token);
+                if (CancellationTokenSource.IsCancellationRequested)
+                    file.Status = FileUploadStatus.Cancelled;
+                {
+                    await FileUploadService.UploadAsync(
+                        file,
+                        () => InvokeAsync(StateHasChanged),
+                        CancellationTokenSource.Token);
+                }
+                if (CancellationTokenSource.IsCancellationRequested)
+                    file.Status = FileUploadStatus.Cancelled;
+                else
+                    file.Status = FileUploadStatus.Completed;
             }
-            if (CancellationTokenSource.IsCancellationRequested)
-                file.Status = FileUploadStatus.Cancelled;
-            else
-                file.Status = FileUploadStatus.Completed;
+            catch (FileUploadException)
+            {
+                file.Status = FileUploadStatus.Failed;
+            }
         }
     }
 }
