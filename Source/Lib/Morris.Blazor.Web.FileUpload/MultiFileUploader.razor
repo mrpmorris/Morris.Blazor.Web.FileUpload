@@ -1,4 +1,8 @@
-﻿<InputFile OnChange=@AddFiles multiple/>
+﻿<InputFile @key=CurrentInputControlId OnChange=@AddFiles multiple/>
+@foreach(string hiddenControlId in HiddenInputControlIds)
+{
+    <InputFile @key=hiddenControlId multiple class="hidden"/>
+}
 
 <ul>
 @foreach(FileUploadInfo fileUploadInfo in FileUploadInfos)
@@ -6,4 +10,5 @@
     <li>@fileUploadInfo.BrowserFile.Name</li>
 }
 </ul>
+<button @onclick=Test>Test</button>
 
