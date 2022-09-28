@@ -4,11 +4,11 @@
     <InputFile @key=hiddenControlId multiple class="hidden"/>
 }
 
+<button @onclick=UploadAsync>Upload</button>
 <ul>
-@foreach(FileUploadInfo fileUploadInfo in FileUploadInfos)
-{
-    <li>@fileUploadInfo.BrowserFile.Name</li>
-}
+    @foreach(FileUploadInfo file in FileUploadInfos)
+    {
+        <li>@file.BrowserFile.Name (@file.BrowserFile.Size) @file.Percent% @file.Status</li>
+    }
 </ul>
-<button @onclick=Test>Test</button>
 

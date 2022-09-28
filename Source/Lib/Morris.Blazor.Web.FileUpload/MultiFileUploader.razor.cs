@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Morris.Blazor.Web.FileUpload.Services;
 
 namespace Morris.Blazor.Web.FileUpload;
 
@@ -7,6 +9,9 @@ public partial class MultiFileUploader
     private readonly List<FileUploadInfo> FileUploadInfos = new();
     private readonly List<string> InputControlIds = new();
     private int NextInputId;
+
+    [Inject]
+    private IFileUploadService FileUploadService { get; set; } = null!;
 
     private string CurrentInputControlId => InputControlIds[InputControlIds.Count - 1];
     private IEnumerable<string> HiddenInputControlIds => InputControlIds.Take(InputControlIds.Count - 1);
@@ -23,7 +28,10 @@ public partial class MultiFileUploader
         for (int i = 0; i < files.Count; i++)
         {
             IBrowserFile browserFile = files[i];
-            var fileUploadInfo = new FileUploadInfo(HtmlInputId: "theInput", HtmlInputFileIndex: i, browserFile);
+            var fileUploadInfo = new FileUploadInfo(
+                htmlInputId: CurrentInputControlId,
+                htmlInputFileIndex: i,
+                browserFile: browserFile);
             FileUploadInfos.Add(fileUploadInfo);
         }
         AddInputControl();
@@ -36,14 +44,11 @@ public partial class MultiFileUploader
         InputControlIds.Add($"InputFileId{NextInputId}");
     }
 
-    private async Task Test()
+    private async Task UploadAsync()
     {
-        byte[] buffer = new byte[4096];
         foreach (FileUploadInfo file in FileUploadInfos)
         {
-            using var source = file.BrowserFile.OpenReadStream(long.MaxValue);
-            Console.WriteLine($"Reading {file.BrowserFile.Name}");
-            await source.ReadAsync(buffer);
+            await FileUploadService.UploadAsync(file, () => InvokeAsync(StateHasChanged));
         }
     }
 }
